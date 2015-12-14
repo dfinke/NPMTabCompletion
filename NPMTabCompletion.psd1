@@ -4,7 +4,7 @@
 RootModule = 'NPMTabCompletion.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0'
+ModuleVersion = '1.1'
 
 # ID used to uniquely identify this module
 GUID = '47ec7318-fc78-4602-82f8-621c8b384813'

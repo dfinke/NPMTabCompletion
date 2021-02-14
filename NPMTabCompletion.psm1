@@ -61,7 +61,7 @@ function NPMCompletion {
         nct tag 'Tag a published version' { }
         nct team 'Manage organization teams and team memberships' { }
         nct test 'Test a package' { }
-        nct uninstall 'Remove a package' { }
+        # nct uninstall 'Remove a package' { }
         nct unpublish 'Remove a package from the registry' { }
         nct update 'Update a package' { }
         nct version 'Bump a package version' { }
@@ -79,6 +79,21 @@ function NPMCompletion {
                 param($wordToComplete, $commandAst)
 
                 $scripts = (Get-Content .\package.json | ConvertFrom-Json).scripts
+                $scripts |
+                    Get-Member -MemberType NoteProperty |
+                    Where-Object { $_.Name -like "${wordToComplete}*" } |
+                    ForEach-Object {
+                        $target = $scripts.($_.Name)
+                        New-CompletionResult $_.Name "$($target)"
+                    }
+            }
+        }
+
+        nct uninstall 'Run arbitrary package scripts' {
+            nct {
+                param($wordToComplete, $commandAst)
+
+                $scripts = (Get-Content .\package.json | ConvertFrom-Json).dependencies
                 $scripts |
                     Get-Member -MemberType NoteProperty |
                     Where-Object { $_.Name -like "${wordToComplete}*" } |
